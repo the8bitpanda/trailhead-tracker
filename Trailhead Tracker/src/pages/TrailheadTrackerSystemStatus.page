@@ -1,0 +1,161 @@
+<apex:page sidebar="false" showHeader="false" title="Trailhead Tracker System Status" cache="true"  
+           standardStylesheets="true" controller="TrailheadTrackerSystemStatusController">
+    
+    <style>
+        .slds-scope [hidden], .slds-scope template {
+        display: block;
+        }
+        .content {
+        min-height: calc(100vh - 53px);
+        }
+        .footer {
+        height: 45px;
+        background-color:white;
+        }
+        
+    </style>
+    
+    <Script>
+        function abortClicked()
+        {
+        abortJob();
+        } 
+    </Script>
+    
+    <apex:slds />
+    
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en" style="background-color:#1798c1">
+        
+        <apex:form >
+            <apex:actionFunction name="abortJob" action="{!abortJob}" rerender="card" status="loading"/>  
+        </apex:form>
+        
+        <apex:actionStatus id="loading">
+            <apex:facet name="start">
+                <div role="status" class="slds-spinner slds-spinner_large slds-spinner_brand">
+                    <span class="slds-assistive-text">Loading</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </apex:facet>
+        </apex:actionStatus>
+        
+        <div class="slds-scope">
+            <div class="content">
+                <article class="slds-border_bottom" style="background-color:white">
+                    <div class="slds-card__header slds-grid">
+                        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                            <div class="slds-media__figure">
+                                <span class="slds-icon_container slds-icon-standard-custom">
+                                    <svg aria-hidden="true" class="slds-icon">
+                                        <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/standard-sprite/svg/symbols.svg#custom')}"></use>
+                                    </svg>
+                                    <span class="slds-assistive-text">System Status</span>
+                                </span>
+                                
+                            </div>
+                            <div class="slds-media__body">
+                                <h2>
+                                    <span class="slds-text-heading_medium">System Status</span>
+                                    <br/> 
+                                    
+                                </h2>
+                            </div>
+                        </header>
+                    </div>
+                </article>
+                <apex:outputPanel id="card">
+                    <apex:outputPanel rendered="{! batchesProcessing}" >
+                        <div  class="slds-card slds-p-around_small slds-m-around_small">
+                            <div class="slds-m-horizontal_xx-small slds-grid">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <div class="slds-text-heading_small slds-m-top_x-small" style="float:left">The 'BatchToUpdateTrailheadStats' is currently processing</div>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <div style="float:right">
+                                        <button class="slds-button slds-button_destructive" onclick="abortClicked();">Abort</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </apex:outputPanel> 
+                    <article class="slds-card slds-m-around_small" style="background-color:white">
+                        <apex:outputPanel id="leaderboardFiltersPanel" >
+                            <table class="slds-table slds-table_bordered slds-table_cell-buffer  ">
+                                <thead>
+                                    <tr class="slds-text-title_caps">
+                                        <th scope="col">
+                                            <div class="slds-truncate " title="DateTime">DateTime</div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate slds-align_absolute-center" title="Status">Status</div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate slds-align_absolute-center " title="ExtendedStatus">ExtendedStatus</div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate slds-align_absolute-center " title="TotalJobItems">TotalJobItems</div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate slds-align_absolute-center " title="NumberOfErrors">NumberOfErrors</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    <apex:repeat value="{!batchJobsList}" var="batchJobsVar">
+                                        <tr>
+                                            <td data-label="DateTime">
+                                                <div class="slds-truncate">{!batchJobsVar.CreatedDate}</div>
+                                            </td>
+                                            <td data-label="Status">
+                                                <div class="slds-align_absolute-center ">{!batchJobsVar.Status}</div>
+                                            </td>
+                                            <td data-label="ExtendedStatus">
+                                                <div class="slds-align_absolute-center">{!batchJobsVar.ExtendedStatus}</div>
+                                            </td>
+                                            <td data-label="TotalJobItems">
+                                                <div class="slds-align_absolute-center">{!batchJobsVar.TotalJobItems}</div>
+                                            </td>
+                                            <td data-label="NumberOfErrors">
+                                                <div class="slds-align_absolute-center">{!batchJobsVar.NumberOfErrors}</div>
+                                            </td>
+                                        </tr>
+                                    </apex:repeat>
+                                    
+                                </tbody>
+                                
+                            </table>
+                        </apex:outputPanel>
+                    </article>
+                </apex:outputPanel>
+            </div>
+            
+            
+            
+            <div class="footer">
+                <div class="slds-grid slds-wrap slds-border_top slds-p-around_small" >
+                    <div class="slds-col slds-size_4-of-12">
+                        <span style="float: left;">
+                            Need Help?&nbsp;<a href="mailTo:snandan@teksystems.com" target="_blank">Contact</a>
+                        </span>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12">
+                        <span class="slds-align_absolute-center">
+                            <a href="/trailheadtracker/trailheadtrackerhome">Trailhead Tracker</a>
+                        </span>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12">
+                        <span style="float: right;">
+                            Shashwat Nandan&nbsp;|&nbsp;TEKsystems
+                        </span>
+                    </div>
+                </div>
+                
+                
+            </div> 
+            
+        </div>
+        
+    </html>
+</apex:page>

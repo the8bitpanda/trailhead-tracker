@@ -1,0 +1,257 @@
+<apex:page sidebar="false" showHeader="false" title="Trailhead Tracker Challenges" cache="true"  
+           standardStylesheets="true" controller="TrailheadTrackerChallengesController">
+    <script>
+    function liveClicked()
+    {
+        liveButtonClicked();
+    }
+    function previousButtonClicked()
+    {
+        previousButtonClicked();
+    }
+    function nextButtonClicked()
+    {
+        nextButtonClicked();
+    }
+    </script>
+    
+    
+    <style>
+        .slds-scope [hidden], .slds-scope template {
+        display: block;
+        }
+        .content {
+        min-height: calc(100vh - 53px);
+        }
+        .footer {
+        height: 45px;
+        }
+        
+        
+    </style>
+    
+    <apex:slds />
+    
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+        
+        <apex:form >
+            <apex:actionFunction name="liveButtonClicked" action="{!reRunBatch}" status="loading" />
+            <apex:actionFunction name="previousButtonClicked" action="{!setPreviousDay}" status="loading" reRender="usersPanel,datePanel"/>
+            <apex:actionFunction name="nextButtonClicked" action="{!setNextDay}" status="loading" reRender="usersPanel,datePanel"/>
+        </apex:form>
+        
+        <apex:actionStatus id="loading">
+            <apex:facet name="start">
+                <div role="status" class="slds-spinner slds-spinner_large slds-spinner_brand">
+                    <span class="slds-assistive-text">Loading</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </apex:facet>
+        </apex:actionStatus>
+        
+        <div class="slds-scope">
+            <div class="content">
+                
+                <!-- Header -->
+                <div class="slds-border_bottom slds-p-around_small">
+                    <div class="slds-grid">
+                        <article class="slds-has-flexi-truncate">
+                            <div>
+                                <h1 class="slds-text-heading_large slds-align_absolute-center">#OneStepAtATime</h1>
+                                <h2 class="slds-text-heading_small slds-align_absolute-center">Learn one new thing every day and see yourself shine on the Wall of Fame! Cue the confetti 🎉</h2>
+                            </div>
+                        </article>
+                        <div class="slds-no-flex">
+                            <apex:outputPanel rendered="{! !batchesProcessing && !isWeekend}">
+                                <span class="slds-button slds-button_success" style="color: white" onclick="liveClicked();" id="liveButton">LIVE</span>
+                            </apex:outputPanel> 
+                            <apex:outputPanel rendered="{! isWeekend}">
+                                <div class="slds-truncate slds-m-top_small" title="The stats are not updated during the weekends. Please try again on the next working day." onclick="alert('The stats are not updated during the weekends. Please try again on the next working day.');">
+                                    <span class="slds-icon_container slds-icon-utility-info_alt " >
+                                        <svg aria-hidden="true" class="slds-icon slds-icon-text-default slds-icon_medium" style="fill:#7E7EFA">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" 
+                                                 xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#info_alt">
+                                            </use>
+                                        </svg>
+                                        <span class="slds-assistive-text">Info</span>
+                                    </span>
+                                </div>
+                            </apex:outputPanel>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                <div class="slds-p-horizontal_small">
+                    <apex:outputPanel rendered="{! batchesProcessing}" 
+                                      styleClass="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_warning slds-box slds-align_absolute-center slds-m-top_small slds-text-heading_small" style="color: white">
+                        The stats are currently getting&nbsp;<a href="/trailheadtracker/trailheadtrackersystemstatus" style="color: white" target="_blank">updated</a>. Kindly refresh (maybe more than one time) the page to see the latest data.
+                    </apex:outputPanel> 
+                </div>
+                <!-- Team Members -->
+                
+                <div class="slds-m-bottom_medium">
+                    <div class="slds-align_absolute-center">
+                        <div class="slds-grid slds-m-top_medium" style="color: blue">
+                            <div class="slds-col"> 
+                                <button class="slds-button slds-button_icon" onclick="previousButtonClicked();">
+                                    <span class="slds-icon_container slds-icon-utility-chevronleft" title="Previous Day"  >
+                                        <svg aria-hidden="true" class="slds-icon" style="fill:#7E7EFA">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" 
+                                                 xlink:href="/apexpages/slds/latest//assets/icons/utility-sprite/svg/symbols.svg#chevronleft">
+                                            </use>
+                                        </svg>
+                                        <span class="slds-assistive-text">Previous Day</span>
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="slds-col slds-m-top_xx-small">
+                                <apex:outputPanel id="datePanel">  
+                                    <h1 class="slds-text-heading_medium  slds-m-horizontal_xx-large">{!displayDate}</h1>
+                                </apex:outputPanel>
+                            </div>
+                            <div class="slds-col">
+                                <button class="slds-button slds-button_icon" onclick="nextButtonClicked();">
+                                    <span class="slds-icon_container slds-icon-utility-chevronright" title="Next Day" >
+                                        <svg aria-hidden="true" class="slds-icon" style="fill:#7E7EFA">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" 
+                                                 xlink:href="/apexpages/slds/latest//assets/icons/utility-sprite/svg/symbols.svg#chevronright">
+                                            </use>
+                                        </svg>
+                                        <span class="slds-assistive-text">Next Day</span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <apex:outputPanel id="usersPanel">
+                        <div class="slds-grid slds-wrap slds-grid_align-space W(100%)">
+                            <apex:repeat value="{!listTrailheadUsers}" var="trailheadUser">
+                                <div class="slds-card slds-align_absolute-center" style="{!if(trailheadUser.Badges_Achieved__r.size >0, 'width:15%; margin-top: 1rem !important; border-style: solid; border-color: #1798c1;', 
+                                                                                         'width:15%;  margin-top: 1rem !important; filter: grayscale(100%); background-color : #efefef')}">
+                                    <div style="width:100%">
+                                        <div class="slds-border_bottom slds-p-around_small" style="{!if(trailheadUser.Badges_Achieved__r.size >0, 'border-color: #1798c1;', '')}" >
+                                            <div style=" position:absolute; top:0; right:0;" class="slds-text-heading_small slds-p-around_small">
+                                                <apex:outputText rendered="{!and(trailheadUser.Streak__c != null, trailheadUser.Streak__c > 1)}">
+                                                    <span title="{!trailheadUser.Name} has completed the #OneStepAtATime challenge for {!trailheadUser.Streak__c} consecutive days">🔥x{!trailheadUser.Streak__c}</span>
+                                                </apex:outputText>
+                                                <apex:outputText rendered="{! !and(trailheadUser.Streak__c != null, trailheadUser.Streak__c > 1)}">
+                                                    &nbsp;
+                                                </apex:outputText>
+                                            </div>
+                                            <div class="slds-align_absolute-center slds-p-around_small">
+                                                <a href="/trailheadtracker/trailheadtrackerdetails?id={!trailheadUser.id}" target="_blank" style="text-decoration:none; cursor: pointer; " oncontextmenu="javascript:window.open('{! 'https://trailhead.salesforce.com/en/me/' + trailheadUser.Trailhead_Id__c}');return false;">
+                                                    <img  src="{!trailheadUser.Profile_Picture_URL__c}" alt="{!trailheadUser.Name}" title="{!trailheadUser.Name}" width="100" height="100" style="border-radius: 50%;" /> 
+                                                </a>
+                                            </div> 
+                                            <div class="slds-text-heading_medium slds-align_absolute-center slds-m-top_xxx-small" title="{!trailheadUser.Name}" >
+                                                <a href="/trailheadtracker/trailheadtrackerdetails?id={!trailheadUser.id}" target="_blank"  class="slds-truncate" style="cursor: pointer; " oncontextmenu="javascript:window.open('{! 'https://trailhead.salesforce.com/en/me/' + trailheadUser.Trailhead_Id__c}');return false;">
+                                                    {!trailheadUser.Name}
+                                                </a>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="slds-grid slds-wrap slds-align_absolute-center slds-p-around_small" style="height: 75px;">
+                                            <apex:repeat value="{!trailheadUser.Badges_Achieved__r}" var="badge">
+                                                <span class="slds-p-around_xx-small" >
+                                                    <a href="/trailheadtracker/trailheadtrackerbadges?viewBadge={!badge.Trailhead_Badge__r.Name}" target="_blank" style="text-decoration:none;" oncontextmenu="javascript:window.open('{!badge.Trailhead_Badge__r.URL__c}');return false;"> 
+                                                        <img  src="{!badge.Trailhead_Badge__r.Icon_URL__c}" alt="{!badge.Trailhead_Badge__r.Title__c}" width="40" height="40"
+                                                             title="{!badge.Trailhead_Badge__r.Title__c}"  /> 
+                                                    </a>
+                                                </span>
+                                            </apex:repeat> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </apex:repeat>
+                        </div>
+                    </apex:outputPanel>
+                </div>
+                
+                <!-- Chatter -->
+                <div class="slds-border_top slds-p-vertical_medium">
+                    <div>
+                        <h1 class="slds-text-heading_medium slds-align_absolute-center slds-p-bottom_small">
+                            <span class="slds-text-heading_large">📢</span>&nbsp;Tell the team what you learned today via #OneStepAtATime 
+                        </h1>
+                        <div class="slds-align_absolute-center ">
+                            <a class="slds-button slds-button_brand" href="{! orgBaseURL + '/lightning/page/chatter/record/' + groupId}" target="_blank">Post to the Trailblazers Group</a>
+                        </div>
+                    </div>
+                    
+                    <apex:outputPanel rendered="{!listChatterFeed.size > 0}">
+                        <div class="slds-feed">
+                            <div class="slds-grid slds-p-vertical_small">
+                                <article class="slds-has-flexi-truncate">
+                                    <h2 class="slds-text-heading_small">Latest Posts</h2>
+                                </article>
+                                <div class="slds-no-flex">
+                                    <a class="slds-text-heading_small" href="{! orgBaseURL + '/lightning/page/chatter/record/' + groupId}" target="_blank">View All</a>
+                                </div>
+                            </div>
+                            <ul class="slds-feed__list">
+                                <apex:repeat value="{!listChatterFeed}" var="feedItem">
+                                    <li class="slds-feed__item slds-card">
+                                        <article class="slds-post">
+                                            <header class="slds-post__header slds-media">
+                                                <div class="slds-media__figure">
+                                                    <span class="slds-avatar slds-avatar_circle slds-avatar_medium">
+                                                        <abbr class="slds-avatar__initials slds-icon-standard-account" title="company name">{!feedItem.publisherInitials}</abbr>
+                                                    </span>
+                                                </div>
+                                                <div class="slds-media__body">
+                                                    <div class="slds-grid slds-grid_align-spread slds-has-flexi-truncate">
+                                                        <a>{!feedItem.publisherName}</a>
+                                                    </div>
+                                                    <p class="slds-text-body_small">{!feedItem.createdDate}</p>
+                                                </div>
+                                            </header>
+                                            <div class="slds-post__content slds-text-longform">
+                                                <apex:outputText value="{!feedItem.body}" escape="false" />
+                                            </div>
+                                            <footer class="slds-post__footer">
+                                                <ul class="slds-post__footer-meta-list slds-list_horizontal slds-has-dividers_right slds-text-title">
+                                                    <li class="slds-item">{!feedItem.likeCount} likes</li>
+                                                    <li class="slds-item">{!feedItem.commentCount} comments</li>
+                                                    <li class="slds-item"><a href="{! orgBaseURL + '/' + feedItem.Id}" target="_blank">View Post</a></li>
+                                                </ul>
+                                            </footer>
+                                        </article>
+                                    </li>
+                                </apex:repeat>   
+                            </ul>
+                        </div>
+                    </apex:outputPanel>
+                </div>
+                
+                
+            </div>
+            
+            <!-- footer -->
+            <div class="footer">
+                <div class="slds-grid slds-wrap slds-border_top slds-p-around_small" >
+                    <div class="slds-col slds-size_4-of-12">
+                        <span style="float: left;">
+                            Need Help?&nbsp;<a href="mailTo:snandan@teksystems.com" target="_blank">Contact</a>
+                        </span>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12">
+                        <span class="slds-align_absolute-center">
+                            <a href="/trailheadtracker/trailheadtrackerhome">Trailhead Tracker</a>
+                        </span>
+                    </div> 
+                    <div class="slds-col slds-size_4-of-12">
+                        <span style="float: right;">
+                            Shashwat Nandan&nbsp;|&nbsp;TEKsystems
+                        </span>
+                    </div>
+                </div>
+                
+                
+            </div> 
+            
+        </div>
+        
+    </html>
+</apex:page>

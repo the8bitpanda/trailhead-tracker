@@ -1,0 +1,322 @@
+<apex:page sidebar="false" showHeader="false" title="Trailhead Tracker Skills" cache="true"  
+           standardStylesheets="true" controller="TrailheadTrackerSkillsController">
+    <script>
+    function liveClicked()
+    {
+        liveButtonClicked();
+    }
+    function skillClicked(skillChosen)
+    {
+        callSetSkill(skillChosen);
+    }
+    function interactiveTableClicked()
+    {
+        callInteractiveTable();
+    }
+    function skillMatrixClicked()
+    {
+        callSkillMatrix();
+    }
+    function columnClicked(sortBy)
+    {
+        callSortUser(sortBy);
+    }
+    
+    
+    </script>
+    
+    
+    <style>
+        .slds-scope [hidden], .slds-scope template {
+        display: block;
+        }
+        .content {
+        min-height: calc(100vh - 53px);
+        }
+        .footer {
+        height: 45px;
+        background-color:white;
+        }
+    </style>
+    
+    <apex:slds />
+    
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en" style="background-color:#1798c1">
+        
+        <apex:form > 
+            <apex:actionFunction name="liveButtonClicked" action="{!reRunBatch}" status="loading" />
+            <apex:actionFunction name="callSetSkill" action="{!setSkill}" rerender="mainPanel" status="loading">     
+                <apex:param id="skillChosen" name="skillChosen" value="" />
+            </apex:actionFunction>
+            <apex:actionFunction name="callInteractiveTable" action="{!setInteractiveTable}" rerender="mainPanel" status="loading"/>
+            <apex:actionFunction name="callSkillMatrix" action="{!setSkillMatrix}" rerender="mainPanel" status="loading"/>
+            <apex:actionFunction name="callSortUser" action="{!sortUser}" rerender="mainPanel" status="loading">     
+                <apex:param id="sortBy" name="sortBy" value="" />
+            </apex:actionFunction>
+        </apex:form>
+        
+        <apex:actionStatus id="loading">
+            <apex:facet name="start">
+                <div role="status" class="slds-spinner slds-spinner_large slds-spinner_brand">
+                    <span class="slds-assistive-text">Loading</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </apex:facet>
+        </apex:actionStatus>
+        
+        <div class="slds-scope">
+            <div class="content">
+                
+                <!--Header-->
+                <article class="slds-border_bottom" style="background-color:white">
+                    <div class="slds-card__header slds-grid">
+                        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                            <div class="slds-media__figure">
+                                <span class="slds-icon_container slds-icon-standard-resource-skill">
+                                    <svg aria-hidden="true" class="slds-icon">
+                                        <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/standard-sprite/svg/symbols.svg#resource_skill')}"></use>
+                                    </svg>
+                                    <span class="slds-assistive-text">Skill Icon</span>
+                                </span>
+                                
+                            </div>
+                            <div class="slds-media__body">
+                                <h2>
+                                    <span class="slds-text-heading_medium">Team's Skills</span>
+                                </h2>
+                            </div>
+                        </header>
+                        <div class="slds-no-flex">
+                            <apex:outputPanel rendered="{! !batchesProcessing && !isWeekend}">
+                                <span class="slds-button slds-button_success slds-m-top_xx-small" style="color: white" onclick="liveClicked();" id="liveButton">LIVE</span>
+                            </apex:outputPanel> 
+                            <apex:outputPanel rendered="{! isWeekend}">
+                                <div class="slds-truncate slds-m-top_xx-small" title="The stats are not updated during the weekends. Please try again on the next working day." onclick="alert('The stats are not updated during the weekends. Please try again on the next working day.');">
+                                    <span class="slds-icon_container slds-icon-utility-info_alt " >
+                                        <svg aria-hidden="true" class="slds-icon slds-icon-text-default slds-icon_medium" style="fill:#7E7EFA">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" 
+                                                 xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#info_alt">
+                                            </use>
+                                        </svg>
+                                        <span class="slds-assistive-text">Info</span>
+                                    </span>
+                                </div>
+                            </apex:outputPanel>
+                        </div>
+                    </div>
+                </article>
+                
+                <div class="slds-p-horizontal_small">
+                    <apex:outputPanel rendered="{! batchesProcessing}" 
+                                      styleClass="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_warning slds-box slds-align_absolute-center slds-m-top_small slds-text-heading_small" style="color: white">
+                        The stats are currently getting&nbsp;<a href="/trailheadtracker/trailheadtrackersystemstatus" style="color: white" target="_blank">updated</a>. Kindly refresh (maybe more than one time) the page to see the latest data.
+                    </apex:outputPanel> 
+                </div>
+                
+                <!--Skills-->
+                <apex:outputPanel id="mainPanel">
+                    
+                    <div class="slds-card slds-m-around_small slds-p-around_small" style="background-color:white">
+                        <div class="slds-align_absolute-center slds-m-bottom_xx-small">
+                            <div>
+                                <div  class="slds-align_absolute-center slds-m-bottom_xx-small">
+                                    Choose a layout selection
+                                </div>
+                                <div class="slds-button-group" role="group"> 
+                                    <button class="{!IF(toggleMatrix, 'slds-button slds-button_outline-brand', 'slds-button slds-button_brand')}" onclick="interactiveTableClicked();">Single Skill View</button>
+                                    <button class="{!IF(toggleMatrix, 'slds-button slds-button_brand', 'slds-button slds-button_outline-brand')}" onclick="skillMatrixClicked();">Skills Matrix</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <apex:outputPanel rendered="{! !toggleMatrix}">
+                        <div class="slds-card slds-m-around_small slds-p-around_small" style="background-color:white">
+                            <apex:repeat value="{!mapSkillUsers}" var="skillName">
+                                <button class="{!IF(skillName == skillChosen, 'slds-button slds-button_brand slds-m-around_xx-small', 'slds-button slds-button_outline-brand slds-m-around_xx-small')}" onclick="skillClicked('{!skillName}');">{!skillName}</button>
+                            </apex:repeat>
+                        </div>
+                        <div class="slds-card slds-m-horizontal_small slds-m-bottom_small slds-p-around_small" style="background-color:white">
+                            <apex:outputPanel rendered="{! and(skillChosen != null, skillChosen != '')}">
+                                <div class="slds-text-heading_medium slds-m-bottom_small">Skill: {!skillChosen}</div>
+                                <table class="slds-table slds-table_cell-buffer slds-table_bordered ">
+                                    <thead>
+                                        <tr class="slds-text-title_caps">
+                                            <th scope="col">
+                                                <div class="slds-truncate" title="Name">Name</div>
+                                            </th>
+                                            <th scope="col">
+                                                <div class="slds-truncate " title="Skill Points">Skill Points</div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <apex:repeat value="{!mapSkillUsers[skillChosen]}" var="varUser">
+                                            <tr>
+                                                <td scope="row" data-label="Name">
+                                                    <div class="slds-truncate">
+                                                        <a href="/trailheadtracker/trailheadtrackerdetails?id={!varUser.id}" target="_blank" oncontextmenu="javascript:window.open('{! 'https://trailhead.salesforce.com/en/me/' + varUser.trailheadId}');return false;">
+                                                            {!varUser.name}
+                                                            <apex:outputText rendered="{!and(varUser.streak != null, varUser.streak > 1)}">
+                                                                <span title="{!varUser.name} has completed the #OneStepAtATime challenge for {!varUser.streak} consecutive days">(🔥x{!varUser.streak})</span>
+                                                            </apex:outputText> 
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                                <td data-label="Skill Points">
+                                                    <div>{!varUser.count}</div>
+                                                </td>
+                                            </tr>
+                                        </apex:repeat>
+                                    </tbody>
+                                </table>
+                                
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{! or(skillChosen == null, skillChosen == '')}">
+                                <h2 class="slds-text-heading_small slds-align_absolute-center">
+                                    Please select a Skill to see Team's stats.
+                                </h2>
+                            </apex:outputPanel>
+                        </div>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{! toggleMatrix}">
+                        <div class="slds-card slds-m-horizontal_small slds-m-bottom_small slds-p-around_small" style="background-color:white; height:600px">
+                            <div class="slds-m-bottom_medium">
+                                <span class="slds-text-heading_medium">Skills Matrix</span>
+                                <span class="slds-float_right ">
+                                    <a class="slds-button slds-button_destructive" href="/trailheadtracker/trailheadtrackerexcelskillmatrix" >
+                                        Export to Excel
+                                    </a>
+                                </span>
+                            </div>
+                            <div class="slds-grid slds-m-right_medium">
+                                <div class="slds-col slds-size_1-of-7">
+                                    <table class="slds-table slds-table_bordered slds-table_col-bordered">
+                                        <thead>
+                                            <tr class="slds-text-title_caps">
+                                                <th scope="col" class="slds-truncate" title="Click to Sort by Name" onclick="columnClicked('Name');" style="{!IF(sortBy = 'Name' ,'background: rgb(22, 50, 92);cursor:pointer;','cursor:pointer;')}"  >
+                                                    <div class="{!IF(sortBy = 'Name', 'slds-text-color_inverse', '')}">Name</div>
+                                                </th> 
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div class="slds-col slds-size_6-of-7">
+                                    <div class="slds-m-right_xxx-small">
+                                        <table class="slds-table slds-table_bordered slds-table_col-bordered" style="word-wrap: break-word;table-layout:fixed;" >
+                                            <thead>
+                                                <tr class="slds-text-title_caps">
+                                                    <apex:repeat value="{!listSkills}" var="skillName">
+                                                        <th scope="col" class="slds-truncate" title="{!'Click to Sort by ' + skillName}" onclick="columnClicked('{!skillName}');" style="{!IF(sortBy = skillName ,'background: rgb(22, 50, 92);cursor:pointer;','cursor:pointer;')}" >
+                                                            <div class="{!IF(sortBy = skillName, 'slds-text-color_inverse', '')}" >{!skillName}</div>
+                                                        </th>
+                                                    </apex:repeat>                                        
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-scrollable_y slds-grid" style="height:85%;">
+                                <div class="slds-col slds-size_1-of-7">
+                                    <table class="slds-table slds-table_bordered slds-table_col-bordered">
+                                        <tbody>
+                                            <apex:repeat value="{!listUsers}" var="skillUser">
+                                                <tr>
+                                                    <td data-label="Name">
+                                                        <div class="slds-truncate">
+                                                            <a href="/trailheadtracker/trailheadtrackerdetails?id={!skillUser.id}" target="_blank" oncontextmenu="javascript:window.open('{! 'https://trailhead.salesforce.com/en/me/' + skillUser.trailheadId}');return false;">
+                                                                {!skillUser.name} 
+                                                                <apex:outputText rendered="{!and(skillUser.streak != null, skillUser.streak > 1)}">
+                                                                    <span title="{!skillUser.name} has completed the #OneStepAtATime challenge for {!skillUser.streak} consecutive days">(🔥x{!skillUser.streak})</span>
+                                                                </apex:outputText>                                                    
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </apex:repeat>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="slds-col slds-size_6-of-7">
+                                    <table class="slds-table slds-table_bordered slds-table_col-bordered" style="word-wrap: break-word;table-layout:fixed;" >
+                                        
+                                        <tbody>
+                                            <apex:repeat value="{!listUsers}" var="skillUser">
+                                                <tr>
+                                                    <apex:repeat value="{!listSkills}" var="skillName">
+                                                        <td data-label="{!skillName}" style="color:white; background-color:{!mapUserSkillColorCoding[skillUser.id][skillName]}">
+                                                            <div  class="slds-align_absolute-center" title="{!skillUser.name + ' : ' +skillName}" >
+                                                                {!mapUsersSkillsMatrix[skillUser.id][skillName]}
+                                                            </div>
+                                                        </td>
+                                                    </apex:repeat>
+                                                </tr>
+                                            </apex:repeat>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="slds-m-vertical_xx-small">
+                                <div class="slds-align_absolute-center slds-grid">
+                                    <div class="slds-col slds-align_absolute-center">
+                                        <span style="width: 15px; height: 15px;background-color:#1798c1"></span>
+                                        &nbsp;-&nbsp;Highest Skill Score
+                                    </div>
+                                    <div class="slds-col slds-align_absolute-center">
+                                        <span style="width: 15px; height: 15px;background-color:#56B643"></span>
+                                        &nbsp;-&nbsp;Top 33%
+                                    </div>
+                                    <div class="slds-col slds-align_absolute-center">
+                                        <span style="width: 15px; height: 15px;background-color:#FFA500"></span>
+                                        &nbsp;-&nbsp;Top 66%
+                                    </div>
+                                    <div class="slds-col slds-align_absolute-center">
+                                        <span style="width: 15px; height: 15px;background-color:#d8000c"></span>
+                                        &nbsp;-&nbsp;Bottom 33%
+                                    </div>
+                                    <div class="slds-col slds-align_absolute-center">
+                                        <span style="width: 15px; height: 15px;background-color:#444444"></span>
+                                        &nbsp;-&nbsp;Skill Not Found
+                                    </div>
+                                </div>
+                                
+                                
+                            </div>
+                        </div>
+                        
+                        
+                    </apex:outputPanel>
+                    
+                </apex:outputPanel>
+                
+                
+            </div>
+            
+            <!-- footer -->
+            <div class="footer">
+                <div class="slds-grid slds-wrap slds-border_top slds-p-around_small" >
+                    <div class="slds-col slds-size_4-of-12">
+                        <span style="float: left;">
+                            Need Help?&nbsp;<a href="mailTo:snandan@teksystems.com" target="_blank">Contact</a>
+                        </span>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12">
+                        <span class="slds-align_absolute-center">
+                            <a href="/trailheadtracker/trailheadtrackerhome">Trailhead Tracker</a>
+                        </span>
+                    </div> 
+                    <div class="slds-col slds-size_4-of-12">
+                        <span style="float: right;">
+                            Shashwat Nandan&nbsp;|&nbsp;TEKsystems
+                        </span>
+                    </div>
+                </div>
+                
+                
+            </div> 
+            
+        </div>
+        
+    </html>
+</apex:page>

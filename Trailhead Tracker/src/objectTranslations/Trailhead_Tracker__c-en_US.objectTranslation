@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Trailhead Tracker</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Trailhead Tracker</value>
+    </caseValues>
+    <fields>
+        <label><!-- Admin Email --></label>
+        <name>Admin_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Challenge Topic --></label>
+        <name>Challenge_Topic__c</name>
+    </fields>
+    <fields>
+        <label><!-- Chatter Post User Id --></label>
+        <name>Chatter_Post_User_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Create Chatter Post --></label>
+        <name>Create_Chatter_Post__c</name>
+    </fields>
+    <fields>
+        <label><!-- Http Request Timeout --></label>
+        <name>Http_Request_Timeout__c</name>
+    </fields>
+    <fields>
+        <label><!-- Trailblazers Group Id --></label>
+        <name>Trailblazers_Group_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Trailhead Badges Begin --></label>
+        <name>Trailhead_Badges_Begin__c</name>
+    </fields>
+    <fields>
+        <label><!-- Trailhead Badges End --></label>
+        <name>Trailhead_Badges_End__c</name>
+    </fields>
+    <fields>
+        <label><!-- Trailhead Display Picture End --></label>
+        <name>Trailhead_Display_Picture_End__c</name>
+    </fields>
+    <fields>
+        <label><!-- Trailhead Display Picture Start --></label>
+        <name>Trailhead_Display_Picture_Start__c</name>
+    </fields>
+    <fields>
+        <label><!-- Trailhead Points Begin --></label>
+        <name>Trailhead_Points_Begin__c</name>
+    </fields>
+    <fields>
+        <label><!-- Trailhead Points End --></label>
+        <name>Trailhead_Points_End__c</name>
+    </fields>
+    <fields>
+        <label><!-- Trailhead Trails Begin --></label>
+        <name>Trailhead_Trails_Begin__c</name>
+    </fields>
+    <fields>
+        <label><!-- Trailhead Trails End --></label>
+        <name>Trailhead_Trails_End__c</name>
+    </fields>
+    <fields>
+        <label><!-- Trailhead URL --></label>
+        <name>Trailhead_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Trailhead User Name Begin --></label>
+        <name>Trailhead_User_Name_Begin__c</name>
+    </fields>
+    <fields>
+        <label><!-- Trailhead User Name End --></label>
+        <name>Trailhead_User_Name_End__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

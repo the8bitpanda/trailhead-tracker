@@ -1,0 +1,47 @@
+<apex:page sidebar="false" showHeader="false" title="Trailhead Tracker Skill Matrix" cache="true"  standardStylesheets="false" contentType="application/vnd.ms-excel#Trailhead Tracker Skills Matrix ({!DAY(TODAY())}-{!MONTH(TODAY())}-{!YEAR(TODAY())}).xls" controller="TrailheadTrackerSkillsController">
+    <apex:slds />
+    <div>
+        
+        <table class="slds-table slds-table_bordered slds-table_col-bordered">
+            <thead>
+                <tr class="slds-text-title_caps">
+                    <th scope="col" class="slds-truncate" title="Click to Sort by Name"  >
+                        <div>Name</div>
+                    </th> 
+                    <apex:repeat value="{!listSkills}" var="skillName">
+                        <th scope="col" class="slds-truncate" title="{!'Click to Sort by ' + skillName}"  >
+                            <div>{!skillName}</div>
+                        </th>
+                    </apex:repeat>                                        
+                </tr>
+            </thead>
+            
+            <tbody>
+                <apex:repeat value="{!listUsers}" var="skillUser">
+                    <tr>
+                        <td data-label="Name">
+                            <div class="slds-truncate">
+                                <a href="{!$Site.BaseUrl}/trailheadtracker/trailheadtrackerdetails?id={!skillUser.id}" target="_blank">
+                                    {!skillUser.name} 
+                                    <apex:outputText rendered="{!and(skillUser.streak != null, skillUser.streak > 1)}">
+                                        <span title="{!skillUser.name} has completed the #OneStepAtATime challenge for {!skillUser.streak} consecutive days">(🔥x{!skillUser.streak})</span>
+                                    </apex:outputText>                                                    
+                                </a>
+                            </div>
+                        </td>
+                        <apex:repeat value="{!listSkills}" var="skillName">
+                            <td data-label="{!skillName}" style="color:white; background-color:{!mapUserSkillColorCoding[skillUser.id][skillName]}">
+                                <div  class="slds-align_absolute-center" title="{!skillUser.name + ' : ' +skillName}" >
+                                    {!mapUsersSkillsMatrix[skillUser.id][skillName]}
+                                </div>
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                </apex:repeat>
+            </tbody>
+        </table>
+        
+    </div>
+        
+    
+</apex:page>

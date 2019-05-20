@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Badge Achieved</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Badges Achieved</value>
+    </caseValues>
+    <fields>
+        <label><!-- Trailhead Badge --></label>
+        <name>Trailhead_Badge__c</name>
+        <relationshipLabel><!-- Badges Achieved --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Trailhead User --></label>
+        <name>Trailhead_User__c</name>
+        <relationshipLabel><!-- Badges Achieved --></relationshipLabel>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

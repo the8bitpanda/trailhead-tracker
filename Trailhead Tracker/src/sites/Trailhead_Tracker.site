@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomSite xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <allowHomePage>false</allowHomePage>
+    <allowStandardAnswersPages>false</allowStandardAnswersPages>
+    <allowStandardIdeasPages>false</allowStandardIdeasPages>
+    <allowStandardLookups>false</allowStandardLookups>
+    <allowStandardSearch>false</allowStandardSearch>
+    <authorizationRequiredPage>TrailheadTrackerErrorPage</authorizationRequiredPage>
+    <bandwidthExceededPage>TrailheadTrackerErrorPage</bandwidthExceededPage>
+    <clickjackProtectionLevel>SameOriginOnly</clickjackProtectionLevel>
+    <description>An application that tracks Trailhead stats for TEKsystems SFDC team.</description>
+    <fileNotFoundPage>TrailheadTrackerErrorPage</fileNotFoundPage>
+    <genericErrorPage>TrailheadTrackerErrorPage</genericErrorPage>
+    <inMaintenancePage>TrailheadTrackerErrorPage</inMaintenancePage>
+    <inactiveIndexPage>TrailheadTrackerErrorPage</inactiveIndexPage>
+    <indexPage>TrailheadTrackerHome</indexPage>
+    <masterLabel>Trailhead Tracker</masterLabel>
+    <requireHttps>true</requireHttps>
+    <requireInsecurePortalAccess>false</requireInsecurePortalAccess>
+    <siteAdmin>nnataraj@tekisvedition.org</siteAdmin>
+    <siteType>Visualforce</siteType>
+    <subdomain>teksfpresources</subdomain>
+    <urlPathPrefix>trailheadtracker</urlPathPrefix>
+</CustomSite>

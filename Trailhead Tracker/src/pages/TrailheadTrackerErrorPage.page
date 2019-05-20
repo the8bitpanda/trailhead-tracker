@@ -1,0 +1,102 @@
+<apex:page sidebar="false" showHeader="false" title="Trailhead Tracker Error Page" cache="true"  standardStylesheets="false" controller="TrailheadTrackerErrorPageController">
+    <script>
+    function sendClicked()
+    {
+        var page = window.location;
+        var comments = ((document.getElementById("comments")).value).trim();
+        var name = ((document.getElementById("reporteeName")).value).trim();
+        var email = ((document.getElementById("reporteeEmail")).value).trim();
+        if(comments == null || comments == undefined || comments.length == 0)
+        { 
+            alert("Please enter your Comments");
+        }
+        else if(name == null || name == undefined || name.length == 0)
+        {
+            alert("Please enter your Name");
+        } 
+            else
+            {
+                sendReport(comments, name, email);
+            }
+    }
+    </script>
+    
+    <apex:slds />
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+        
+        <apex:form >
+            <apex:actionFunction name="sendReport" action="{!sendReport}" rerender="mainPanel" status="loading">     
+                <apex:param id="comments" name="comments" value="" />
+                <apex:param id="name" name="name" value="" />
+                <apex:param id="email" name="email" value="" />
+            </apex:actionFunction>
+        </apex:form>
+        
+        <apex:actionStatus id="loading">
+            <apex:facet name="start">
+                <div role="status" class="slds-spinner slds-spinner_large slds-spinner_brand">
+                    <span class="slds-assistive-text">Loading</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </apex:facet>
+        </apex:actionStatus>
+        
+        <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-center" style="height:700px">
+            <div class="slds-col">
+                <div class="slds-border_bottom" style="font-size: 300%;">
+                    Well that was unexpected. 😐
+                </div>
+                <apex:outputPanel id="mainPanel">
+                    <div class="slds-p-vertical_small slds-text-heading_medium">
+                        Looks like the page you are looking for isn't working.<br/>
+                        Make sure the URL has no typos.<br/>
+                        Try reloading the page or navigating back to Trailhead Tracker home.<br/>
+                        If the error persists, you can report the issue.                
+                    </div>
+                    <div>
+                        <div>
+                            <apex:form >
+                                <apex:commandButton styleClass="slds-button slds-button_brand" reRender="mainPanel" value="Report an Issue" status="loading">
+                                    <apex:param name="showReportIssuePanel" value="{! !showReportIssuePanel}" assignTo="{!showReportIssuePanel}" />
+                                </apex:commandButton>
+                                <a class="slds-button slds-button_neutral" href="/trailheadtracker">Back to Home</a>
+                            </apex:form>
+                            
+                        </div>
+                    </div>
+                    
+                    <apex:outputPanel rendered="{!showReportIssuePanel}">
+                        <div class="slds-m-top_small slds-border_top slds-border_bottom slds-p-vertical_small">
+                            <apex:outputPanel rendered="{! !showThankYouPanel}">
+                                <div class="slds-form-element">
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-grid slds-wrap slds-grid_align-end">
+                                            <div  class="slds-col slds-size_6-of-6">   
+                                                <textarea id="comments" class="slds-textarea" placeholder="Enter your comments here (Be as specific as possible about what you were looking for, what you did just before the error, etc.)"></textarea>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-6">
+                                                <input type="text" id="reporteeName" class="slds-input slds-m-top_x-small" placeholder="Your Name" />   
+                                            </div>
+                                            <div class="slds-col slds-size_4-of-6 ">
+                                                <input type="text" id="reporteeEmail" class="slds-input slds-m-top_x-small" placeholder="Your Email Address (optional)" /> 
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-6" >
+                                                <button class="slds-button slds-button_destructive slds-m-top_x-small" style="float: right;" id="sendButton" onClick="sendClicked();">Send</button>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{! showThankYouPanel}">
+                                <div class="slds-text-heading_medium slds-align_absolute-center">Thank you for reporting the issue! We'll look into it as soon as possible.</div>
+                            </apex:outputPanel>
+                        </div>
+                    </apex:outputPanel>     
+                </apex:outputPanel>
+            </div> 
+            
+        </div>
+    </html>
+</apex:page>

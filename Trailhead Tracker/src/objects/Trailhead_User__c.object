@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>This object stores the details of the team members who uses the application. Whenever a user signs up to the system via the public page, this object stores that record.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Last_Update__c</fullName>
+        <description>This field stores the date when the record was last synced with Trailhead.</description>
+        <externalId>false</externalId>
+        <label>Last Update</label>
+        <summarizedField>Daily_Stats__c.Date__c</summarizedField>
+        <summaryForeignKey>Daily_Stats__c.Trailhead_User__c</summaryForeignKey>
+        <summaryOperation>max</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Profile_Picture_URL__c</fullName>
+        <description>This field stores the url to the team member’s Trailhead profile picture.</description>
+        <externalId>false</externalId>
+        <label>Profile Picture URL</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Rank__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Total_Badges__c &gt;= 100 &amp;&amp; Total_Points__c &gt;= 50000 , &apos;Ranger&apos;, 
+IF(Total_Badges__c &gt;= 50 &amp;&amp; Total_Points__c &gt;= 35000 , &apos;Expeditioner&apos;, 
+IF(Total_Badges__c &gt;= 25 &amp;&amp; Total_Points__c &gt;= 18000 , &apos;Mountaineer&apos;, 
+IF(Total_Badges__c &gt;= 10 &amp;&amp; Total_Points__c &gt;= 9000 , &apos;Adventurer&apos;, 
+IF(Total_Badges__c &gt;= 5 &amp;&amp; Total_Points__c &gt;= 3000 , &apos;Explorer&apos;, 
+IF(Total_Badges__c &gt;= 1 &amp;&amp; Total_Points__c &gt;= 200 , &apos;Hiker&apos;, &apos;Scout&apos;))))))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Rank</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Skills__c</fullName>
+        <description>Stores the skills from Trailhead in JSON format</description>
+        <externalId>false</externalId>
+        <label>Skills</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Streak_Updated__c</fullName>
+        <description>Stores the Date when the streak count was last updated</description>
+        <externalId>false</externalId>
+        <label>Streak Updated</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Streak__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>Stores the user&apos;s streak (the number of consecutive days the user completed the challenge)</description>
+        <externalId>false</externalId>
+        <label>Streak</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Badges__c</fullName>
+        <description>This field stores the total badges the team member has.</description>
+        <externalId>false</externalId>
+        <label>Total Badges</label>
+        <summarizedField>Daily_Stats__c.Badges__c</summarizedField>
+        <summaryForeignKey>Daily_Stats__c.Trailhead_User__c</summaryForeignKey>
+        <summaryOperation>max</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Points__c</fullName>
+        <description>This field stores the total points the team member has.</description>
+        <externalId>false</externalId>
+        <label>Total Points</label>
+        <summarizedField>Daily_Stats__c.Points__c</summarizedField>
+        <summaryForeignKey>Daily_Stats__c.Trailhead_User__c</summaryForeignKey>
+        <summaryOperation>max</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Superbadges__c</fullName>
+        <description>This field stores the total superbadges the team member has.</description>
+        <externalId>false</externalId>
+        <label>Total Superbadges</label>
+        <summarizedField>Daily_Stats__c.Superbadges__c</summarizedField>
+        <summaryForeignKey>Daily_Stats__c.Trailhead_User__c</summaryForeignKey>
+        <summaryOperation>max</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Trailhead_Id__c</fullName>
+        <caseSensitive>true</caseSensitive>
+        <description>This field stores the Trailhead Id available on the user’s Trailhead profile page. This is the only data required for the user to sign up for the application.</description>
+        <externalId>false</externalId>
+        <label>Trailhead Id</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <label>Trailhead User</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Rank__c</columns>
+        <columns>Total_Badges__c</columns>
+        <columns>Total_Points__c</columns>
+        <columns>Total_Superbadges__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Trailhead Users</pluralLabel>
+    <searchLayouts>
+        <searchResultsAdditionalFields>Rank__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Total_Badges__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Total_Points__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Total_Superbadges__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

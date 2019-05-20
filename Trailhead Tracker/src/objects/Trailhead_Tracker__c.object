@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <description>Since the code parses Trailhead Profile Pages which can change over time, the application uses the following Custom Setting to store certain tags from the Profile Page.</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Admin_Email__c</fullName>
+        <externalId>false</externalId>
+        <label>Admin Email</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Challenge_Topic__c</fullName>
+        <description>#OneStepAtATime</description>
+        <externalId>false</externalId>
+        <label>Challenge Topic</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Chatter_Post_User_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Chatter Post User Id</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Create_Chatter_Post__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Create Chatter Post</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Http_Request_Timeout__c</fullName>
+        <externalId>false</externalId>
+        <label>Http Request Timeout</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Trailblazers_Group_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Trailblazers Group Id</label>
+        <length>20</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Trailhead_Badges_Begin__c</fullName>
+        <description>Stores the tag where the badges data begins.</description>
+        <externalId>false</externalId>
+        <label>Trailhead Badges Begin</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Trailhead_Badges_End__c</fullName>
+        <description>Stores the tag where the badges data ends.</description>
+        <externalId>false</externalId>
+        <label>Trailhead Badges End</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Trailhead_Display_Picture_End__c</fullName>
+        <externalId>false</externalId>
+        <label>Trailhead Display Picture End</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Trailhead_Display_Picture_Start__c</fullName>
+        <externalId>false</externalId>
+        <label>Trailhead Display Picture Start</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Trailhead_Points_Begin__c</fullName>
+        <description>Stores the tag where the points data begins.</description>
+        <externalId>false</externalId>
+        <label>Trailhead Points Begin</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Trailhead_Points_End__c</fullName>
+        <description>Stores the tag where the points data ends.</description>
+        <externalId>false</externalId>
+        <label>Trailhead Points End</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Trailhead_Trails_Begin__c</fullName>
+        <description>Stores the tag where the trails data begins.</description>
+        <externalId>false</externalId>
+        <label>Trailhead Trails Begin</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Trailhead_Trails_End__c</fullName>
+        <description>Stores the tag where the trails data ends.</description>
+        <externalId>false</externalId>
+        <label>Trailhead Trails End</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Trailhead_URL__c</fullName>
+        <description>Stores the static part of the Trailhead Profile Page URL</description>
+        <externalId>false</externalId>
+        <label>Trailhead URL</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Trailhead_User_Name_Begin__c</fullName>
+        <description>Stores the tag where the username data begins.</description>
+        <externalId>false</externalId>
+        <label>Trailhead User Name Begin</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Trailhead_User_Name_End__c</fullName>
+        <description>Stores the tag where the username data ends.</description>
+        <externalId>false</externalId>
+        <label>Trailhead User Name End</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Trailhead Tracker</label>
+    <visibility>Public</visibility>
+</CustomObject>
